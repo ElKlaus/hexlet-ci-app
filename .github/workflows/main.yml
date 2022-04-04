@@ -41,8 +41,7 @@ jobs:
       - name: Run lint
         run: make lint
 
-      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
+      - uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
