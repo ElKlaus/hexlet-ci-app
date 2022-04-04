@@ -25,9 +25,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Caching npm dependencies
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'npm'
 
       # Runs a set of commands using the runners shell
       - name: Setup project
@@ -38,3 +40,9 @@ jobs:
 
       - name: Run lint
         run: make lint
+
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
